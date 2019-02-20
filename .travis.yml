@@ -6,10 +6,12 @@ addons:
     packages:
       - texinfo
       - cmake
-      - libgmp-dev 
-      - libmpfr-dev 
+      - libgmp-dev
+      - libmpfr-dev
+      - libntl-dev
+
 env:
-  MAKE="make -j4"
+  MAKE="make -j -l8"
 
 os:
   - linux
@@ -20,7 +22,7 @@ compiler:
 install:
   - mkdir build
   - cd build
-  - cmake -G"Unix Makefiles" -DBUILD_TESTING=yes -DCMAKE_BUILD_TYPE=Release ..
+  - cmake -G"Unix Makefiles" -DWITH_NTL=yes -DBUILD_TESTING=yes -DCMAKE_BUILD_TYPE=Release ..
   - ${MAKE}
   - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then ldd lib/libflint.so; fi
 
